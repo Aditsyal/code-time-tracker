@@ -1,0 +1,108 @@
+{
+  "name": "code-time-tracker",
+  "displayName": "Code Time Tracker",
+  "description": "Team-based time tracking extension with GitHub authentication",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "extensionKind": [
+    "ui"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "code-time-tracker.login",
+        "title": "Time Tracker: Login with GitHub"
+      },
+      {
+        "command": "code-time-tracker.showDashboard",
+        "title": "Time Tracker: Show Dashboard"
+      },
+      {
+        "command": "code-time-tracker.startTracking",
+        "title": "Time Tracker: Start Tracking",
+        "icon": "$(play)"
+      },
+      {
+        "command": "code-time-tracker.stopTracking",
+        "title": "Time Tracker: Stop Tracking",
+        "icon": "$(stop)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "timeTracker",
+          "title": "Time Tracker",
+          "icon": "$(clock)"
+        }
+      ]
+    },
+    "views": {
+      "timeTracker": [
+        {
+          "type": "webview",
+          "id": "timeTrackerDashboard",
+          "name": "Dashboard",
+          "icon": "$(graph)"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Code Time Tracker",
+      "properties": {
+        "timeTracker.supabaseUrl": {
+          "type": "string",
+          "description": "Your Supabase project URL (required). Get this from your Supabase project settings."
+        },
+        "timeTracker.supabaseKey": {
+          "type": "string",
+          "description": "Your Supabase API key (required). Use the 'anon' or 'service_role' key from your Supabase project settings."
+        },
+        "timeTracker.idleTimeoutMinutes": {
+          "type": "number",
+          "default": 5,
+          "description": "Number of minutes of inactivity before stopping time tracking"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "test:unit": "mocha --require ts-node/register 'src/test/suite/**/*.test.ts'",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.10.0",
+    "@types/sinon": "^17.0.4",
+    "@types/vscode": "^1.100.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "@vscode/test-electron": "^2.3.6",
+    "eslint": "^8.54.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.8.2",
+    "sinon": "^20.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  }
+}
